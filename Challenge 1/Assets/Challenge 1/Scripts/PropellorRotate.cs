@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PropellorRotate : MonoBehaviour
 {
+    private float rotationSpeed = 25.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +16,6 @@ public class PropellorRotate : MonoBehaviour
     void Update()
     {
         // Make the propellor spin     
-        transform.Rotate(Vector3.forward, 25);
+        transform.Rotate(Vector3.forward * rotationSpeed);
     }
 }
