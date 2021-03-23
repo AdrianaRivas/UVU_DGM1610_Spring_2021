@@ -246,8 +246,6 @@ MonoBehaviour:
   - {fileID: 6102442748984155592, guid: 3bd00355412fe594a90158ff48bebff6, type: 3}
   - {fileID: 4379755899882692788, guid: 6200cabcb65351949a0d17cf0804bf10, type: 3}
   - {fileID: 7568547508905962780, guid: 5b096d6cef447e94eba224eff7fd060f, type: 3}
-  - {fileID: 8270750899843320761, guid: 3dcb262d19079bf40a1a4ce0a85f068b, type: 3}
-  animalIndex: 0
 --- !u!4 &266798830
 Transform:
   m_ObjectHideFlags: 0
@@ -431,7 +429,6 @@ GameObject:
   - component: {fileID: 475985834}
   - component: {fileID: 475985837}
   - component: {fileID: 475985836}
-  - component: {fileID: 475985835}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -453,19 +450,6 @@ Transform:
   m_Father: {fileID: 992285706}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &475985835
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 475985833}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 2.220446e-16, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &475985836
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -566,7 +550,7 @@ Camera:
   far clip plane: 1000
   field of view: 45
   orthographic: 1
-  orthographic size: 10.11
+  orthographic size: 10.46
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -1663,12 +1663,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6102442748984373514}
   - component: {fileID: 6102442748991306568}
-  - component: {fileID: 6102442749323453708}
   - component: {fileID: 6102442749323453698}
   - component: {fileID: 6102442749323453705}
   - component: {fileID: 6102442749323453709}
   m_Layer: 0
-  m_Name: Animal_Cow_Brown
+  m_Name: Animal_Cow_Brown_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1708,22 +1707,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &6102442749323453708
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6102442748984155592}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!65 &6102442749323453698
 BoxCollider:
   m_ObjectHideFlags: 0
