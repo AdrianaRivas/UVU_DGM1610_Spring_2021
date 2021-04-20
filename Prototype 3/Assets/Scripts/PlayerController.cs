@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public bool isGameOver = false;
 
     private Animator playerAnim;
+    
+    public ParticleSystem DirtParticles;
+    public ParticleSystem explosionParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
             Debug.Log("Grounded");
+            DirtParticles.Play();
         }
         else if(collision.gameObject.CompareTag("Obstacle"))
         {
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Game Over!!!");
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 1);
+            explosionParticles.Play();
         }
     }   
 }
