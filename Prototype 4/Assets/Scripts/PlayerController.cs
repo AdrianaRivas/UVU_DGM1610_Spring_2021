@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
-    public float speed;
+    public float speed = 50.0f;
     public float powerupStrength = 16.0f;
     public GameObject powerupIndicator;
     private GameObject focalPoint;
@@ -24,11 +24,11 @@ public class PlayerController : MonoBehaviour
         float forwardInput = Input.GetAxis("Vertical");
         playerRb.AddForce(focalPoint.transform.forward * speed * Time.deltaTime);
 
-        powerupIndicator.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+        powerupIndicator.transform.position = transform.position + new Vector3 (0,-0.5f,0);
     }
-
+    
     // Allows the player to pickup powerup item
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Powerup"))
         {
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             powerupIndicator.gameObject.SetActive(true);
         }
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Enemy") && hasPowerup)
