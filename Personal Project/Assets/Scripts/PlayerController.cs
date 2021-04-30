@@ -60,4 +60,22 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, zRange);
         }
     }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Player has collided with the enemy!"); 
+        }
+    }
+    
+    // Power-up gets destroyed when it collides with player
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Pickup"))
+        {
+            Destroy(other.gameObject);
+            Debug.Log("Collected power-up!");
+        }
+    }
 }
