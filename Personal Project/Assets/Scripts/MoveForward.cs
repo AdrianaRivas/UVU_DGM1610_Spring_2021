@@ -7,9 +7,10 @@ public class MoveForward : MonoBehaviour
     public float speed = 10.0f;
     private float xRange = 14.0f;
     private float zRange = 14.0f;
+
     private Rigidbody enemyRb;
     private Rigidbody obstacleRb;
-    private Rigidbody pickupRb;
+    
     private GameObject player;
 
     // Start is called before the first frame update
@@ -17,7 +18,7 @@ public class MoveForward : MonoBehaviour
     {
         enemyRb = GetComponent<Rigidbody>();
         obstacleRb = GetComponent<Rigidbody>();
-        pickupRb = GetComponent<Rigidbody>();
+        
         player = GameObject.Find("Squid");   
     }
 
@@ -29,9 +30,7 @@ public class MoveForward : MonoBehaviour
         enemyRb.AddForce(lookDirection * speed * Time.deltaTime);
         // Set obstacle direction toward player and go there
         obstacleRb.AddForce(lookDirection * speed * Time.deltaTime);
-        // Set pickup direction toward player and go there
-        pickupRb.AddForce(lookDirection * speed * Time.deltaTime);
-
+        
         // Destroy gameobject when out of bounds on the x-axis both sides
         if(transform.position.x < -xRange)
         {

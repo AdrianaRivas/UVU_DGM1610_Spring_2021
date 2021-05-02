@@ -65,7 +65,13 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Player has collided with the enemy!"); 
+            Destroy(collision.gameObject);
+            Debug.Log("Enemy destroyed!"); 
+        }
+
+        if(collision.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Player has collided with an obstacle!");
         }
     }
     

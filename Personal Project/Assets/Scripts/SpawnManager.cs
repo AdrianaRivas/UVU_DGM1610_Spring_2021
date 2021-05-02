@@ -6,55 +6,81 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject[] enemies;
     public GameObject[] obstacles;
-    public GameObject powerup;
-    private float zEnemySpawn = 9.0f;
-    private float zObstacleSpawn = -9.0f;
-    private float xSpawnRange = 12.0f;
-    private float zPowerupRange = 5.0f;
-    private float ySpawn = 0.5f;
-    private float powerupSpawnTime = 5.0f;
-    private float obstacleSpawnTime = 0.5f;
-    private float enemySpawnTime = 0.5f;
-    private float startDelay = 1.0f;
+    public GameObject powerupPrefab;
+
+    private float spawnRange = 9.0f;
+
+    public int enemyCount;
+    public int obstacleCount;
+
+    public int waveNumber = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnRandomEnemy", startDelay, enemySpawnTime);
-        InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
-        InvokeRepeating("SpawnPowerup", startDelay, powerupSpawnTime);
+        // Spawn an enemy
+        SpawnEnemyWave(waveNumber);
+
+        // Spawn an obstacle
+        SpawnObstacleWave(waveNumber);
+
+        // Creates a powerup pickup for player to collect
+        Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);  
     }
 
-    // Enemy spawns in a random range
-    void SpawnRandomEnemy()
+    // Update is called once per frame
+    void Update()
     {
-        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
-        int randomIndex = Random.Range(0, enemies.Length);
+        // Find how many enemies are in play
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        // If enemy count gets down to zero, spawn new enemies in greater number
+        if(enemyCount == 0)
+        {
+            waveNumber ++;
+            SpawnEnemyWave(waveNumber);
 
-        Vector3 spawnPos = new Vector3(randomX, ySpawn, zEnemySpawn);
+            // Creates additional powerup pickups for the player to collect
+            Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation); 
+        }
 
-        Instantiate(enemies[randomIndex], spawnPos, enemies[randomIndex].gameObject.transform.rotation);
+        // Find how many obstacles are in play
+        obstacleCount = GameObject.FindGameObjectsWithTag("Obstacle").Length;
+        // If obstacle count gets down to zero, spawn new obstacles in greater number
+        if(obstacleCount == 0)
+        {
+            waveNumber ++;
+            SpawnObstacleWave(waveNumber);
+        }
     }
 
-    // Obstacle spawns in a random range
-    void SpawnRandomObstacle()
+    private Vector3 GenerateSpawnPosition()
     {
-        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
-        int randomIndex = Random.Range(0, obstacles.Length);
+        // Generating random values for x and z
+        float spawnPosX = Random.Range(-spawnRange, spawnRange);
+        float spawnPosZ = Random.Range(-spawnRange, spawnRange);
+        // Generating random position for enemy and obstacle
+        Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
 
-        Vector3 spawnPos = new Vector3(randomX, ySpawn, zObstacleSpawn);
-
-        Instantiate(obstacles[randomIndex], spawnPos, obstacles[randomIndex].gameObject.transform.rotation);
+        return randomPos;
     }
 
-    // Power-up spawns in a random range
-    void SpawnPowerup()
+    void SpawnEnemyWave(int enemiesToSpawn)
     {
-        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
-        float randomZ = Random.Range(-zPowerupRange, zPowerupRange);
+        for(int i = 0; i < enemiesToSpawn; i++)
+        {
+            int randomIndex = Random.Range(0, enemies.Length);
 
-        Vector3 spawnPos = new Vector3(randomX, ySpawn, randomZ);
-
-        Instantiate(powerup, spawnPos, powerup.gameObject.transform.rotation);
+            Instantiate(enemies[randomIndex], GenerateSpawnPosition(), enemies[randomIndex].gameObject.transform.rotation);
+        }
     }
+
+    void SpawnObstacleWave(int obstaclesToSpawn)
+    {
+        for(int i = 0; i < obstaclesToSpawn; i++)
+        {
+            int randomIndex = Random.Range(0, obstacles.Length);
+
+            Instantiate(obstacles[randomIndex], GenerateSpawnPosition(), obstacles[randomIndex].gameObject.transform.rotation);
+        }
+    }    
 }
