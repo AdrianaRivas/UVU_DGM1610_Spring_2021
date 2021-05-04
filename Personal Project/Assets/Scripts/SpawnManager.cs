@@ -6,9 +6,13 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject[] enemies;
     public GameObject[] obstacles;
-    public GameObject powerupPrefab;
+    public GameObject powerup;
 
-    private float spawnRange = 9.0f;
+    private float zEnemySpawn = 10.0f;
+    private float zObstacleSpawn = 10.0f;
+    private float xSpawnRange = 18.0f;
+    private float zPowerupRange = 5.0f;
+    private float ySpawn = 0.75f;
 
     public int enemyCount;
     public int obstacleCount;
@@ -18,14 +22,17 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SpawnEnemy();
+        SpawnPowerup();
+        SpawnObstacle();
+        
+        GenerateSpawnPosition();
+
         // Spawn an enemy
         SpawnEnemyWave(waveNumber);
 
         // Spawn an obstacle
         SpawnObstacleWave(waveNumber);
-
-        // Creates a powerup pickup for player to collect
-        Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);  
     }
 
     // Update is called once per frame
@@ -37,10 +44,7 @@ public class SpawnManager : MonoBehaviour
         if(enemyCount == 0)
         {
             waveNumber ++;
-            SpawnEnemyWave(waveNumber);
-
-            // Creates additional powerup pickups for the player to collect
-            Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation); 
+            SpawnEnemyWave(waveNumber); 
         }
 
         // Find how many obstacles are in play
@@ -53,11 +57,41 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    void SpawnEnemy()
+    {
+        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
+        int randomIndex = Random.Range(0,enemies.Length);
+
+        Vector3 spawnPos = new Vector3(randomX, ySpawn, zEnemySpawn);
+
+        Instantiate(enemies[randomIndex], spawnPos, enemies[randomIndex].gameObject.transform.rotation);
+    }
+
+    void SpawnObstacle()
+    {
+        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
+        int randomIndex = Random.Range(0,obstacles.Length);
+
+        Vector3 spawnPos = new Vector3(randomX, ySpawn, zObstacleSpawn);
+
+        Instantiate(obstacles[randomIndex], spawnPos, obstacles[randomIndex].gameObject.transform.rotation);
+    }
+
+     void SpawnPowerup()
+    {
+        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
+        float randomZ = Random.Range(-zPowerupRange, zPowerupRange);
+
+        Vector3 spawnPos = new Vector3(randomX, ySpawn, randomZ);
+
+        Instantiate(powerup, spawnPos, powerup.gameObject.transform.rotation);
+    }
+
     private Vector3 GenerateSpawnPosition()
     {
         // Generating random values for x and z
-        float spawnPosX = Random.Range(-spawnRange, spawnRange);
-        float spawnPosZ = Random.Range(-spawnRange, spawnRange);
+        float spawnPosX = Random.Range(-xSpawnRange, xSpawnRange);
+        float spawnPosZ = Random.Range(-zPowerupRange, zPowerupRange);
         // Generating random position for enemy and obstacle
         Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
 
@@ -70,7 +104,7 @@ public class SpawnManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, enemies.Length);
 
-            Instantiate(enemies[randomIndex], GenerateSpawnPosition(), enemies[randomIndex].gameObject.transform.rotation);
+            GameObject enemy = Instantiate(enemies[randomIndex], GenerateSpawnPosition(), enemies[randomIndex].gameObject.transform.rotation);
         }
     }
 
@@ -80,7 +114,7 @@ public class SpawnManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, obstacles.Length);
 
-            Instantiate(obstacles[randomIndex], GenerateSpawnPosition(), obstacles[randomIndex].gameObject.transform.rotation);
+            GameObject obstacle = Instantiate(obstacles[randomIndex], GenerateSpawnPosition(), obstacles[randomIndex].gameObject.transform.rotation);
         }
     }    
 }

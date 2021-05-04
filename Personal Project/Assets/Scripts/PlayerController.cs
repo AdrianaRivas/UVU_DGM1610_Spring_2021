@@ -5,16 +5,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float speed = 15.0f;
-    private float xRange = 14.0f;
-    private float zRange = 14.0f;
+    private float xBound = 9.0f;
+    private float zBound = 9.0f;
     public float horizontalInput;
     public float verticalInput;
+    private GameObject player;
     private Rigidbody playerRb;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
+        player = GameObject.Find("Squid");
+        playerRb = player.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -31,8 +33,8 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         
-        transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
-        transform.Translate(Vector3.forward * verticalInput * Time.deltaTime * speed);
+        player.transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
+        player.transform.Translate(Vector3.forward * verticalInput * Time.deltaTime * speed);
 
         playerRb.AddForce(Vector3.forward * speed * verticalInput);
         playerRb.AddForce(Vector3.right * speed * horizontalInput);
@@ -42,22 +44,22 @@ public class PlayerController : MonoBehaviour
     void ConstrainPlayerPosition()
     {
         // Keeps the player from leaving both sides of the screen
-        if(transform.position.x < -xRange)
+        if(player.transform.position.x < -xBound)
         {
-            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
+            player.transform.position = new Vector3(-xBound, transform.position.y, transform.position.z);
         }
-        if(transform.position.x > xRange)
+        if(player.transform.position.x > xBound)
         {
-            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
+            player.transform.position = new Vector3(xBound, transform.position.y, transform.position.z);
         }
         // Keeps the player from leaving top and bottom of the screen
-        if(transform.position.z < -zRange)
+        if(player.transform.position.z < -zBound)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, -zRange);
+            player.transform.position = new Vector3(transform.position.x, transform.position.y, -zBound);
         }
-        if(transform.position.z > zRange)
+        if(player.transform.position.z > zBound)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, zRange);
+            player.transform.position = new Vector3(transform.position.x, transform.position.y, zBound);
         }
     }
     
@@ -65,7 +67,6 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
             Debug.Log("Enemy destroyed!"); 
         }
 
